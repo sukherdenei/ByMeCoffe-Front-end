@@ -1,10 +1,7 @@
-import Image from "next/image";
-import { SignUp } from "./user/singup";
-
 export default function Home() {
   return (
-    <div >
-      <SignUp/>
+    <div>
+      <h1>app home</h1>
     </div>
   );
 }
