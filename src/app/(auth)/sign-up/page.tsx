@@ -11,7 +11,7 @@ export default function SignUpPage() {
   };
   return (
     <div>
-      <FormSteps />
+      <FormSteps nextPage={nextPage} />
     </div>
   );
 }

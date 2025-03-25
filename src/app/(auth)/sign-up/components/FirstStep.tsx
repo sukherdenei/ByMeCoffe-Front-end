@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const FirstStep = () => {
+const FirstStep = ({ nextPage }: { nextPage: () => void }) => {
   return (
     <div className="w-full h-screen flex items-center justify-center ">
       <Link href={"/login"}>
@@ -33,7 +33,7 @@ const FirstStep = () => {
         </div>
 
         <div className="flex items-start gap-[10px] px-[24px] pb-[24px] w-full ">
-          <Button variant="default" className="w-full h-10">
+          <Button variant="default" className="w-full h-10" onClick={nextPage}>
             Continue
           </Button>
         </div>
