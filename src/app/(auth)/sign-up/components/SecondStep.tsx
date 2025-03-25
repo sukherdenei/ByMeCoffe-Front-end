@@ -59,7 +59,7 @@ export const SecondStep = () => {
       <Link href={"/login"}>
         <Button
           variant={"secondary"}
-          className="h-10 absolute top-[32px] right-[80px] cursor-pointer "
+          className="h-10 absolute top-[32px] right-[80px] cursor-pointer"
         >
           Log in
         </Button>
@@ -101,7 +101,7 @@ export const SecondStep = () => {
             name="password"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-[10px] items-start px-[24px] pb-[24px] w-full  ">
-                <div className="flex flex-col items-start gap-2 w-full  ">
+                <div className="flex flex-col items-start gap-2 w-full">
                   <FormLabel className="text-[14px] font-[500] leading-[14px]  ">
                     Password
                   </FormLabel>

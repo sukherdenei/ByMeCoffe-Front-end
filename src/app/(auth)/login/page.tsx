@@ -46,11 +46,6 @@ const LoginPage = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    loginUser(values.email, values.password);
-  }
-
   const loginUser = async (email: string, password: string) => {
     const response = await fetch("http://localhost:3000/api/users", {
       method: "POST",
@@ -72,6 +67,11 @@ const LoginPage = () => {
     const getUserName = localStorage.getItem("userName");
     setUserName(getUserName);
   }, []);
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+    loginUser(values.email, values.password);
+  }
 
   return (
     <div className="w-full h-screen flex items-center justify-center ">

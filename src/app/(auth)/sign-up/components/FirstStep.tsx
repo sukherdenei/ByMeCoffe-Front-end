@@ -24,7 +24,7 @@ const formSchema = z.object({
     .min(3, {
       message: "Username must be at least 3 characters.",
     })
-    .max(512, "Maximum 12 character"),
+    .max(12, "Maximum 12 character"),
 });
 
 export function FirstStep({ nextPage }: { nextPage: () => void }) {
