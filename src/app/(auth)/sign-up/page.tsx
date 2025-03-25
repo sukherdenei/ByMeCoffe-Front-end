@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import FirstStep from "./components/FirstStep";
 import { SecondStep } from "./components/SecondStep";
+import { FirstStep } from "./components/FirstStep";
 
 export default function SignUpPage() {
   const [current, setCurrent] = useState<number>(0);
