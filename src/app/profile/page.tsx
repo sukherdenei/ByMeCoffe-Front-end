@@ -7,6 +7,7 @@ import { SecondStep } from "./_components/SecondStep";
 const ProfilePage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const FormSteps = [FirstStep, SecondStep][currentStep];
+ 
   return (
     <div>
       <Header />
@@ -17,3 +18,4 @@ const ProfilePage = () => {
   );
 };
 export default ProfilePage;
+

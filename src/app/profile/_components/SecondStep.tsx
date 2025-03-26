@@ -1,8 +1,9 @@
 "use client";
-
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "sonner";
 import {
   Form,
   FormControl,
@@ -14,6 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Country, CountryDropdown } from "@/components/ui/country-dropdown";
+
+
 
 import {
   Select,
@@ -25,6 +29,8 @@ import {
 
 import { useRouter } from "next/navigation";
 
+
+
 const formSchema = z.object({
   country: z.string().nonempty("Please select country"),
   firstName: z.string().nonempty("Please enter your first name"),
@@ -34,8 +40,8 @@ const formSchema = z.object({
   year: z.string().nonempty("Please enter year"),
   cvc: z.string().nonempty("Please enter your  cvc"),
 });
-
 export const SecondStep = () => {
+  const [selectedCountry, setSelectedCountry] = React.useState<Country | null>(null);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,11 +55,15 @@ export const SecondStep = () => {
       cvc: "",
     },
   });
+  
 
   function onSubmit(values: z.infer<typeof formSchema>) {
+    toast.success(`${selectedCountry?.name} ${selectedCountry?.emoji} `);
     console.log(values);
     router.push("/");
   }
+
+
   return (
     <div>
       <div className="w-[510px] flex flex-col items-start ">
@@ -71,7 +81,26 @@ export const SecondStep = () => {
               </h4>
             </div>
             <div className="w-full flex flex-col items-start gap-6 ">
-              <FormField
+            <FormField
+          control={form.control}
+          name="country"
+          render={({ field }) => (
+            <FormItem className="flex w-full flex-col gap-2 items-start">
+              <FormLabel>Select country</FormLabel>
+              <div className="w-full bg-red-500">
+              <CountryDropdown 
+                placeholder="Country"
+                defaultValue={field.value}
+                onChange={(country) => {
+                  field.onChange(country.alpha3);
+                }}
+              />
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+              {/* <FormField
                 control={form.control}
                 name="firstName"
                 render={({ field }) => (
@@ -83,9 +112,9 @@ export const SecondStep = () => {
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="light">Light</SelectItem>
-                          <SelectItem value="dark">Dark</SelectItem>
-                          <SelectItem value="system">System</SelectItem>
+                          <SelectItem value="light">Korea</SelectItem>
+                          <SelectItem value="dark">Mongolia</SelectItem>
+                          <SelectItem value="system">Australia</SelectItem>
                         </SelectContent>
                       </Select>
                     </FormControl>
@@ -93,7 +122,7 @@ export const SecondStep = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <div className="w-full flex items-start gap-3 ">
                 <FormField
                   control={form.control}
