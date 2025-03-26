@@ -1,4 +1,7 @@
 import { getUsers } from "../user";
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
+
 
 export const checkUser = async ({
   email,
@@ -12,7 +15,9 @@ export const checkUser = async ({
 
   if (!user) {
     return new Response(
-      JSON.stringify({ message: "user not found", error: true }),
+
+      JSON.stringify({ message: "user not found", error: 
+        true }),
       {
         status: 404,
       }

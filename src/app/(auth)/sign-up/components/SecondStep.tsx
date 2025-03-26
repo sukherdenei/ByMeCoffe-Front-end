@@ -71,7 +71,7 @@ export const SecondStep = () => {
         >
           <div className="flex flex-col items-start p-6 gap-[6px] ">
             <h3 className="text-[24px] font-[600] leading-[32px] w-full ">
-              Welcome, {userName}
+              Welcome {userName}
             </h3>
             <h4 className="w-full text-[14px] font-[400] leading-[20px] text-muted-foreground ">
               Connect email and set a password

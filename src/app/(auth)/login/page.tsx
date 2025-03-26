@@ -1,9 +1,7 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -35,7 +33,7 @@ const formSchema = z.object({
     }),
 });
 
-const LoginPage = () => {
+const LoginPage = ({SecondStep,email,password}:{SecondStep:string,email:string,password:string}) => {
   const router = useRouter();
   const [userName, setUserName] = useState<string | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -47,7 +45,7 @@ const LoginPage = () => {
   });
 
   const loginUser = async (email: string, password: string) => {
-    const response = await fetch("http://localhost:3000/api/users", {
+    const response = await fetch("http://localhost:3000/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +53,7 @@ const LoginPage = () => {
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    console.log("data", data);
+    console.log("data-58", data);
     if (data.error) {
       alert(data.message);
     } else {
@@ -90,7 +88,7 @@ const LoginPage = () => {
         >
           <div className="flex flex-col items-start p-6  ">
             <h3 className="text-[24px] font-[600] leading-[32px] w-full ">
-              Welcome
+            Welcome back login to your account
             </h3>
           </div>
           <FormField

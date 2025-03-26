@@ -17,6 +17,10 @@ import { useForm } from "react-hook-form";
 import { json } from "stream/consumers";
 import { boolean, z } from "zod";
 import { UserType } from "../../../../../util/type";
+import { toast } from "sonner"
+import { Toaster } from "@/components/ui/sonner"
+
+
 
 const formSchema = z.object({
   username: z
@@ -42,17 +46,9 @@ export function FirstStep({ nextPage }: { nextPage: () => void }) {
     return existingUsernames.includes(username);
   }
 
-  const usernameToCheck = "user1";
-
-  if (isUsernameTaken(usernameToCheck)) {
-    console.log(`"${usernameToCheck}" нь аль хэдийн бүртгэгдсэн байна.`);
-  } else {
-    console.log(`"${usernameToCheck}" нь ашиглахад бэлэн байна.`);
-  }
-
   const [users, setUsers] = useState<UserType[] | null>(null);
 
-  const addUser = async (email: string, password: string) => {
+   const addUser = async (email: string, password: string) => {
     useEffect(() => {
       fetch("api/user", {
         method: "POST",
@@ -64,12 +60,16 @@ export function FirstStep({ nextPage }: { nextPage: () => void }) {
     }, []);
   };
 
-  console.log(users);
-
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    nextPage();
-    isUsernameTaken(values.username);
+      const usernameToCheck = values.username;
+    if (isUsernameTaken(usernameToCheck)) {
+      toast("already name exists..")
+    } else {
+      toast(`"${usernameToCheck}" нь ашиглахад бэлэн байна.`);
+      nextPage();
+    }
+    // addUser(values.username)
   }
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -104,6 +104,7 @@ export function FirstStep({ nextPage }: { nextPage: () => void }) {
           <Button type="submit" variant="default" className="w-full h-10">
             Continue
           </Button>
+          <Toaster />
         </form>
       </Form>
       <div>{users && users[0].name}</div>
