@@ -17,8 +17,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Country, CountryDropdown } from "@/components/ui/country-dropdown";
 
-
-
 import {
   Select,
   SelectContent,
@@ -29,8 +27,6 @@ import {
 
 import { useRouter } from "next/navigation";
 
-
-
 const formSchema = z.object({
   country: z.string().nonempty("Please select country"),
   firstName: z.string().nonempty("Please enter your first name"),
@@ -38,10 +34,12 @@ const formSchema = z.object({
   about: z.string().nonempty("Please enter your card number"),
   expires: z.string().nonempty("Please enter month"),
   year: z.string().nonempty("Please enter year"),
-  cvc: z.string().nonempty("Please enter your  cvc"),
+  cvv: z.string().nonempty("Please enter your cvv"),
 });
 export const SecondStep = () => {
-  const [selectedCountry, setSelectedCountry] = React.useState<Country | null>(null);
+  const [selectedCountry, setSelectedCountry] = React.useState<Country | null>(
+    null
+  );
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,17 +50,15 @@ export const SecondStep = () => {
       about: "",
       expires: "",
       year: "",
-      cvc: "",
+      cvv: "",
     },
   });
-  
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast.success(`${selectedCountry?.name} ${selectedCountry?.emoji} `);
     console.log(values);
     router.push("/");
   }
-
 
   return (
     <div>
@@ -81,25 +77,25 @@ export const SecondStep = () => {
               </h4>
             </div>
             <div className="w-full flex flex-col items-start gap-6 ">
-            <FormField
-          control={form.control}
-          name="country"
-          render={({ field }) => (
-            <FormItem className="flex w-full flex-col gap-2 items-start">
-              <FormLabel>Select country</FormLabel>
-              <div className="w-full bg-red-500">
-              <CountryDropdown 
-                placeholder="Country"
-                defaultValue={field.value}
-                onChange={(country) => {
-                  field.onChange(country.alpha3);
-                }}
+              <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <FormItem className="flex w-full flex-col gap-2 items-start">
+                    <FormLabel>Select country</FormLabel>
+                    <div className="w-full">
+                      <CountryDropdown
+                        placeholder="Country"
+                        defaultValue={field.value}
+                        onChange={(country) => {
+                          field.onChange(country.alpha3);
+                        }}
+                      />
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              </div>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
               {/* <FormField
                 control={form.control}
                 name="firstName"
@@ -219,13 +215,13 @@ export const SecondStep = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="cvc"
+                  name="cvv"
                   render={({ field }) => (
                     <FormItem className="w-full">
-                      <FormLabel>CVC</FormLabel>
+                      <FormLabel>Cvv</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="CVC"
+                          placeholder="Cvv"
                           className="w-full h-[36px] "
                           {...field}
                         />

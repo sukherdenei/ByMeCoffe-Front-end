@@ -33,7 +33,15 @@ const formSchema = z.object({
     }),
 });
 
-const LoginPage = ({SecondStep,email,password}:{SecondStep:string,email:string,password:string}) => {
+const LoginPage = ({
+  SecondStep,
+  email,
+  password,
+}: {
+  SecondStep: string;
+  email: string;
+  password: string;
+}) => {
   const router = useRouter();
   const [userName, setUserName] = useState<string | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -88,7 +96,7 @@ const LoginPage = ({SecondStep,email,password}:{SecondStep:string,email:string,p
         >
           <div className="flex flex-col items-start p-6  ">
             <h3 className="text-[24px] font-[600] leading-[32px] w-full ">
-            Welcome back login to your account
+              Welcome back login to your account
             </h3>
           </div>
           <FormField

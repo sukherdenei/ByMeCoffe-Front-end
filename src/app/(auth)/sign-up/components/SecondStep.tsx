@@ -107,13 +107,13 @@ export const SecondStep = () => {
                   </FormLabel>
                   <FormControl>
                     <Input
+                      id="myInput"
                       placeholder="Enter username here"
                       {...field}
                       type="password"
                     />
                   </FormControl>
                 </div>
-
                 <FormDescription hidden></FormDescription>
                 <FormMessage />
               </FormItem>
