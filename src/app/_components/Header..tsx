@@ -10,9 +10,10 @@ export const Header = () => {
         <div className="max-w-[1280px] w-full flex justify-between items-center ">
           <div className="flex gap-2 items-center ">
             <Coffee className="w-6 h-6 " />
+            <Link href={"/default"}>
             <h4 className="text-[16px] font-[700] leading-[20px] w-[119px] h-6 ">
               Buy Me Coffee
-            </h4>
+            </h4></Link>
           </div>
           <Link href={"/login"}>
             <Button

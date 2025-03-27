@@ -31,10 +31,15 @@ const formSchema = z.object({
   country: z.string().nonempty("Please select country"),
   firstName: z.string().nonempty("Please enter your first name"),
   lastName: z.string().nonempty("Please enter your last name"),
-  about: z.string().nonempty("Please enter your card number"),
+  about: z.string().nonempty("Please enter your card number").min(10, {
+    message: "Card number must be at 10 characters.",
+  })
+  .max(12, "Maximum 12 character"),
   expires: z.string().nonempty("Please enter month"),
   year: z.string().nonempty("Please enter year"),
-  cvv: z.string().nonempty("Please enter your cvv"),
+  cvv: z.string().nonempty("Please enter your cvv").min(3, {
+    message: "CVV number must be at 3 characters.",
+  })
 });
 export const SecondStep = () => {
   const [selectedCountry, setSelectedCountry] = React.useState<Country | null>(
@@ -96,29 +101,7 @@ export const SecondStep = () => {
                   </FormItem>
                 )}
               />
-              {/* <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem className="flex w-full flex-col gap-2 items-start ">
-                    <FormLabel>Select country</FormLabel>
-                    <FormControl>
-                      <Select {...field}>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="light">Korea</SelectItem>
-                          <SelectItem value="dark">Mongolia</SelectItem>
-                          <SelectItem value="system">Australia</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormDescription hidden></FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
+     
               <div className="w-full flex items-start gap-3 ">
                 <FormField
                   control={form.control}

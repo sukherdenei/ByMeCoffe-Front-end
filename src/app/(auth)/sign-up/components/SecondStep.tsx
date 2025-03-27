@@ -64,6 +64,7 @@ export const SecondStep = () => {
           Log in
         </Button>
       </Link>
+      
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
