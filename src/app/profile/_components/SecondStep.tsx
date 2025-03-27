@@ -31,15 +31,18 @@ const formSchema = z.object({
   country: z.string().nonempty("Please select country"),
   firstName: z.string().nonempty("Please enter your first name"),
   lastName: z.string().nonempty("Please enter your last name"),
-  about: z.string().nonempty("Please enter your card number").min(10, {
-    message: "Card number must be at 10 characters.",
-  })
-  .max(12, "Maximum 12 character"),
+  about: z
+    .string()
+    .nonempty("Please enter your card number")
+    .min(10, {
+      message: "Card number must be at 10 characters.",
+    })
+    .max(12, "Maximum 12 character"),
   expires: z.string().nonempty("Please enter month"),
   year: z.string().nonempty("Please enter year"),
   cvv: z.string().nonempty("Please enter your cvv").min(3, {
     message: "CVV number must be at 3 characters.",
-  })
+  }),
 });
 export const SecondStep = () => {
   const [selectedCountry, setSelectedCountry] = React.useState<Country | null>(
@@ -101,7 +104,7 @@ export const SecondStep = () => {
                   </FormItem>
                 )}
               />
-     
+
               <div className="w-full flex items-start gap-3 ">
                 <FormField
                   control={form.control}
