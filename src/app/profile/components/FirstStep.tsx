@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -13,12 +15,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import { Camera } from "lucide-react";
+import Image from "next/image";
 
 const formSchema = z.object({
-  photo: z.instanceof(File).optional(),
-  name: z.string().nonempty("Name is required"),
-  about: z.string().nonempty("About is required"),
-  url: z.string().url("Enter a valid URL").nonempty("URL is required"),
+  photo: z.string().nonempty("Зураг заавал шаардлагатай"),
+  name: z.string().nonempty("Нэр заавал шаардлагатай"),
+  about: z.string().nonempty("Тайлбар заавал шаардлагатай"),
+  url: z.string().url("Зөв URL оруулна уу").nonempty("URL заавал шаардлагатай"),
 });
 
 export const FirstStep = ({
@@ -28,74 +33,78 @@ export const FirstStep = ({
   currentStep: number;
   setCurrentStep: (_e: number) => void;
 }) => {
-  const [preview, setPreview] = useState<string | null>(null);
-
+  const [image, setImage] = useState<string | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      photo: undefined,
-      name: "sukherdene",
-      about: "Consistency",
-      url: "https://www.facebook.com",
+      photo: "",
+      name: "",
+      about: "",
+      url: "",
     },
   });
-
-  const handleFileChange = (file: File | undefined) => {
-    if (file) {
-      setPreview(URL.createObjectURL(file));
-    } else {
-      setPreview(null);
-    }
-  };
-  
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     setCurrentStep(currentStep + 1);
   }
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImage(URL.createObjectURL(file));
+    }
+  };
   return (
     <div>
       <div className="">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col w-[510px] items-start gap-6"
+            className="flex flex-col w-[510px] items-start gap-6  "
           >
-            <h3 className="text-[24px] font-[600] leading-[32px]">
+            <h3 className="text-[24px] font-[600] leading-[32px] ">
               Complete your profile page
             </h3>
             <FormField
               control={form.control}
               name="photo"
               render={({ field }) => (
-                <FormItem className="flex flex-col gap-3 items-start object-contain">
+                <FormItem className="flex flex-col gap-3 items-start ">
                   <FormLabel>Add photo</FormLabel>
-                  
-                  {preview ? (
-                    <img
-                      src={preview}
-                      alt="Preview"
-                      className="w-[160px] h-[160px] rounded-full object-contain"
-                    />
-                  ):                  
-                  <FormControl className="flex flex-col items-start">
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    className="w-[160px] h-[160px] rounded-full border-[2px] border-dashed"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      field.onChange(file); // Update the form value
-                      handleFileChange(file); // Update the preview
-                    }}
-                  />
-               </FormControl>} 
+                  <FormControl>
+                    {image ? (
+                      <div>
+                        <Image
+                          alt=""
+                          src={image}
+                          height={160}
+                          width={160}
+                          className="w-40 h-40 rounded-full bg-cover bg-center "
+                        />
+                      </div>
+                    ) : (
+                      <label
+                        {...field}
+                        htmlFor="photo"
+                        className="w-40 h-40 rounded-full cursor-pointer border-[2px] border-dashed flex items-center justify-center "
+                      >
+                        <Camera className="text-gray-300 h-[28px] w-[28px] " />
+                        <Input
+                          type="file"
+                          id="photo"
+                          className="hidden"
+                          onChange={handleFileChange}
+                        />
+                      </label>
+                    )}
+                  </FormControl>
+                  <FormDescription hidden></FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div className="flex flex-col gap-3 items-start w-full">
+            <div className="flex flex-col gap-3 items-start w-full ">
               <FormField
                 control={form.control}
                 name="name"
@@ -104,11 +113,12 @@ export const FirstStep = ({
                     <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="Enter your name here"
+                        placeholder="Enter your name here "
                         className="w-full h-10"
                         {...field}
                       />
                     </FormControl>
+                    <FormDescription hidden></FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -121,11 +131,12 @@ export const FirstStep = ({
                     <FormLabel>About</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Write about yourself here"
+                        placeholder="Write about yourself here "
                         className="w-full h-[131px]"
                         {...field}
                       />
                     </FormControl>
+                    <FormDescription hidden></FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -138,18 +149,19 @@ export const FirstStep = ({
                     <FormLabel>Social media URL</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="https://"
+                        placeholder="https:// "
                         className="w-full h-10"
                         {...field}
                       />
                     </FormControl>
+                    <FormDescription hidden></FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
-            <div className="flex w-full justify-end">
-              <Button className="w-[246px] h-10 cursor-pointer" type="submit">
+            <div className="flex w-full justify-end ">
+              <Button className="w-[246px] h-10 cursor-pointer " type="submit">
                 Continue
               </Button>
             </div>

@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 import { Header } from "../_components/Header.";
-import { FirstStep } from "./_components/FirstStep";
-import { SecondStep } from "./_components/SecondStep";
+import { FirstStep } from "./components/FirstStep";
+import { SecondStep } from "./components/SecondStep";
 
 const ProfilePage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const FormSteps = [FirstStep, SecondStep][currentStep];
- 
+
   return (
     <div>
       <Header />
@@ -18,4 +18,3 @@ const ProfilePage = () => {
   );
 };
 export default ProfilePage;
-
