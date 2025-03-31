@@ -52,13 +52,13 @@ export const SecondStep = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      country: "",
-      firstName: "",
-      lastName: "",
+      country: "Mongolia",
+      firstName: "Sukherdene",
+      lastName: "B",
       about: "",
-      expires: "",
-      year: "",
-      cvv: "",
+      expires: "12",
+      year: "2025",
+      cvv: "999",
     },
   });
 
@@ -153,7 +153,7 @@ export const SecondStep = () => {
                     <FormControl>
                       <Input
                         placeholder="XXXX-XXXX-XXXX-XXXX"
-                        className="w-full h-10"
+                        className="w-full h-10" type="number"
                         {...field}
                       />
                     </FormControl>
@@ -173,7 +173,7 @@ export const SecondStep = () => {
                         <Input
                           placeholder="Month"
                           className="w-full h-[36px] "
-                          {...field}
+                          {...field} type="number"
                         />
                       </FormControl>
                       <FormDescription hidden></FormDescription>
@@ -191,7 +191,7 @@ export const SecondStep = () => {
                         <Input
                           placeholder="Year"
                           className="w-full h-[36px] "
-                          {...field}
+                          {...field} type="number"
                         />
                       </FormControl>
                       <FormDescription hidden></FormDescription>
@@ -209,7 +209,7 @@ export const SecondStep = () => {
                         <Input
                           placeholder="Cvv"
                           className="w-full h-[36px] "
-                          {...field}
+                          {...field} type="number"
                         />
                       </FormControl>
                       <FormDescription hidden></FormDescription>

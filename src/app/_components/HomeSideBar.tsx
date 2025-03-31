@@ -18,23 +18,24 @@ export const HomeSideBar = () => {
         variant={"ghost"}
         className="w-[250px] h-[36px] cursor-pointer text-[14px] font-[500] leading-[20px]  flex items-center justify-start "
       >
-        Explore
+        <Link href={"/explore"}> Explore</Link>
       </Button>
       <Button
         variant={"ghost"}
         className="w-[250px] h-[36px] cursor-pointer  flex  justify-start "
       >
+        <Link href={"/view-page"}>
         <h4 className="text-[14px] font-[500] leading-[20px] ml-1 ">
           View page
         </h4>
-
+        </Link>
         <ExternalLink />
       </Button>
       <Button
         variant={"ghost"}
         className="w-[250px] h-[36px] cursor-pointer text-[14px] font-[500] leading-[20px] flex items-center justify-start "
       >
-        Account settings
+        <Link href={"/acc-settings"}> Account settings</Link>
       </Button>
     </div>
   );

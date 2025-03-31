@@ -1,7 +1,4 @@
 import { getUsers } from "../user";
-import { Toaster } from "@/components/ui/sonner"
-import { toast } from "sonner"
-
 
 export const checkUser = async ({
   email,

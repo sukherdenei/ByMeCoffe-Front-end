@@ -34,9 +34,9 @@ export const FirstStep = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       photo: undefined,
-      name: "",
-      about: "",
-      url: "",
+      name: "sukherdene",
+      about: "Consistency",
+      url: "https://www.facebook.com",
     },
   });
 
