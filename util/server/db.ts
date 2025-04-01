@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
 import { Client } from "pg";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -17,3 +17,5 @@ export const getClient = (): Client => {
     },
   });
 };
+
+// 16 line rejectUnauthorized: false, developer uyed false product bolgoh uyed true bolgon //

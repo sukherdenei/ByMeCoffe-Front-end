@@ -11,16 +11,16 @@ import { error } from "console";
 // }
 
 export async function POST(req: Request, res: Response) {
-  const {name, price} = await req.json();
+  const { name, price } = await req.json();
   try {
-    const query = `INSERT INTO "coffee" (name, price) VALUES ($1, $2)`
-    const addCoffee = await runQuery(query,[name,price] )
+    const query = `INSERT INTO "coffee" (name, price) VALUES ($1, $2)`;
+    const addCoffee = await runQuery(query, [name, price]);
 
-    return new NextResponse(JSON.stringify({user: addCoffee }));
+    return new NextResponse(JSON.stringify({ user: addCoffee }));
   } catch (error) {
-    return new NextResponse (JSON.stringify({error:"Failed to run query"}),{
-      status:500
-    })
+    return new NextResponse(JSON.stringify({ error: "Failed to run query" }), {
+      status: 500,
+    });
   }
 
   // return await checkUser({ email: body.email, password: body.password });
@@ -28,29 +28,25 @@ export async function POST(req: Request, res: Response) {
 
 export async function GET(): Promise<NextResponse> {
   try {
-//     const createTable = 
-//       `CREATE TABLE "public"."Coffee" ("id" integer PRIMARY KEY,
-//   "name" varchar NOT NULL,
-//   "price" integer
-// );` ;
-const user = `SELECT id, email,password  FROM "coffee" WHERE name='latte' ORDER BY price;`;
+    //     const createTable =
+    //       `CREATE TABLE "public"."Coffee" ("id" integer PRIMARY KEY,
+    //   "name" varchar NOT NULL,
+    //   "price" integer
+    // );` ;
+    const user = `SELECT id, email,password  FROM "coffee" WHERE name='latte' ORDER BY price;`;
 
+    const getUser = await runQuery(user);
+    if (getUser.length <= 0) {
+      return new NextResponse(JSON.stringify({ error: "coffe not found" }), {
+        status: 404,
+      });
+    }
 
-
-const getUser = await runQuery(user);
-if(getUser.length <=0){
-  return new NextResponse(JSON.stringify({error:"coffe not found"}),{
-    status:404,
-  })
-}
-
-    return new NextResponse(JSON.stringify({getUser:getUser}));
+    return new NextResponse(JSON.stringify({ getUser: getUser }));
   } catch (error) {
-    console.log("Failed to run query:",error)
-    return new NextResponse (JSON.stringify({error:"Failed to run query"}),{
-      status:500
-    })
+    console.log("Failed to run query:", error);
+    return new NextResponse(JSON.stringify({ error: "Failed to run query" }), {
+      status: 500,
+    });
   }
 }
-
-

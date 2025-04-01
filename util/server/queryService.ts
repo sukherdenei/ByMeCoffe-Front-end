@@ -18,3 +18,4 @@ export async function runQuery<T>(
     await client.end();
   }
 }
+// avah huseltiing query service hiine

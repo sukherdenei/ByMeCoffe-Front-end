@@ -61,7 +61,7 @@ const LoginPage = ({
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    console.log("data-58", data);
+    console.log("data-64", data);
     if (data.error) {
       alert(data.message);
     } else {
