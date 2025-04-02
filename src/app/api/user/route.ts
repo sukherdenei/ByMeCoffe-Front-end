@@ -28,11 +28,15 @@ export async function POST(req: Request, res: Response) {
 
 export async function GET(): Promise<NextResponse> {
   try {
-    //     const createTable =
-    //       `CREATE TABLE "public"."Coffee" ("id" integer PRIMARY KEY,
-    //   "name" varchar NOT NULL,
-    //   "price" integer
-    // );` ;
+//         const createTable =
+//           `CREATE TABLE "public"."user" (
+//   "id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+//   "username" integer NOT NULL,
+//   "email" integer NOT NULL,
+//   "password" integer NOT NULL,
+//   "createdAt" text NOT NULL,
+//   "updatedAt" text NOT NULL
+// );` ;
     const user = `SELECT id, email,password  FROM "coffee" WHERE name='latte' ORDER BY price;`;
 
     const getUser = await runQuery(user);
