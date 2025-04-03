@@ -16,9 +16,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { json } from "stream/consumers";
 import { boolean, z } from "zod";
-import { UserType } from "../../../../../util/type";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
+import { userType } from "../../../../../util/type";
 
 const formSchema = z.object({
   username: z
@@ -29,7 +29,13 @@ const formSchema = z.object({
     .max(12, "Maximum 12 character"),
 });
 
-export function FirstStep({ nextPage }: { nextPage: () => void }) {
+export function FirstStep({
+  nextPage,
+  setUserName,
+}: {
+  nextPage: () => void;
+  setUserName: (username: string) => void;
+}) {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,30 +50,31 @@ export function FirstStep({ nextPage }: { nextPage: () => void }) {
     return existingUsernames.includes(username);
   }
 
-  const [users, setUsers] = useState<UserType[] | null>(null);
+  const [users, setUsers] = useState<userType[] | null>(null);
 
-  const addUser = async (email: string, password: string) => {
-    useEffect(() => {
-      fetch("api/user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      })
-        .then((data) => data.json())
-        .then((json) => setUsers(json.data));
-    }, []);
+  const addUser = async (username: string) => {
+    // useEffect(() => {
+    fetch("api/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username }),
+    })
+      .then((data) => data.json())
+      .then((json) => setUsers(json.data));
+    // }, []);
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     const usernameToCheck = values.username;
+    setUserName(values.username);
     if (isUsernameTaken(usernameToCheck)) {
       toast("already name exists..");
     } else {
       toast(`"${usernameToCheck}" нь ашиглахад бэлэн байна.`);
       nextPage();
+      addUser(values.username);
     }
-    // addUser(values.username)
   }
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -105,7 +112,7 @@ export function FirstStep({ nextPage }: { nextPage: () => void }) {
           <Toaster />
         </form>
       </Form>
-      <div>{users && users[0].name}</div>
+      <div>{users && users[0].username}</div>
     </div>
   );
 }

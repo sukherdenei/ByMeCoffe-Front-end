@@ -153,7 +153,8 @@ export const SecondStep = () => {
                     <FormControl>
                       <Input
                         placeholder="XXXX-XXXX-XXXX-XXXX"
-                        className="w-full h-10" type="number"
+                        className="w-full h-10"
+                        type="number"
                         {...field}
                       />
                     </FormControl>
@@ -173,7 +174,8 @@ export const SecondStep = () => {
                         <Input
                           placeholder="Month"
                           className="w-full h-[36px] "
-                          {...field} type="number"
+                          {...field}
+                          type="number"
                         />
                       </FormControl>
                       <FormDescription hidden></FormDescription>
@@ -191,7 +193,8 @@ export const SecondStep = () => {
                         <Input
                           placeholder="Year"
                           className="w-full h-[36px] "
-                          {...field} type="number"
+                          {...field}
+                          type="number"
                         />
                       </FormControl>
                       <FormDescription hidden></FormDescription>
@@ -209,7 +212,8 @@ export const SecondStep = () => {
                         <Input
                           placeholder="Cvv"
                           className="w-full h-[36px] "
-                          {...field} type="number"
+                          {...field}
+                          type="number"
                         />
                       </FormControl>
                       <FormDescription hidden></FormDescription>

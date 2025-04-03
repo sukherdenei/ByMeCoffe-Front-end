@@ -12,9 +12,7 @@ export const checkUser = async ({
 
   if (!user) {
     return new Response(
-
-      JSON.stringify({ message: "user not found", error: 
-        true }),
+      JSON.stringify({ message: "user not found", error: true }),
       {
         status: 404,
       }

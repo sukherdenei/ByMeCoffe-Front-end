@@ -4,32 +4,9 @@ import { error } from "console";
 import { userType } from "../../../../util/type";
 import bcrypt from "bcrypt";
 
-export async function GET(): Promise<Response> {
-  try {
-    const getUserQuery = `SELECT *  FROM "user";`;
-    const users = await runQuery(getUserQuery);
-    if (!users || users.length === 0) {
-      return new NextResponse(JSON.stringify({ error: "User not found" }), {
-        status: 404,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-    return new NextResponse(JSON.stringify({ users }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (err) {
-    console.error("Failed to run query", err);
-    return new NextResponse(JSON.stringify({ error: "Failed to run query" }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-}
-
 export async function POST(req: Request): Promise<Response> {
   try {
-    const { email, password, profile } = await req.json();
+    const { email, password } = await req.json();
 
     if (!email || !password) {
       return new NextResponse(

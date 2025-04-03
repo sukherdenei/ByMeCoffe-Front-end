@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Toaster } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -33,7 +34,11 @@ const formSchema = z.object({
     }),
 });
 
-export const SecondStep = () => {
+export const SecondStep = ({
+  signUp,
+}: {
+  signUp: (email: string, password: string) => void;
+}) => {
   const router = useRouter();
   const [userName, setUserName] = useState<string | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,9 +49,24 @@ export const SecondStep = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const signupUser = async (email: string, password: string) => {
+    const response = await fetch("http://localhost:3000/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    console.log("Successfully signUp", data);
+
     router.push("/login");
+  };
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    signUp(values.email, values.password);
     console.log(values);
+    signupUser(values.email, values.password);
   }
 
   useEffect(() => {
@@ -64,7 +84,7 @@ export const SecondStep = () => {
           Log in
         </Button>
       </Link>
-      
+
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

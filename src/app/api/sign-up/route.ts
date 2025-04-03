@@ -16,14 +16,17 @@
 
 import { NextResponse } from "next/server";
 import { runQuery } from "../../../../util/server/queryService";
+import { hashSync } from "bcrypt";
 
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     const { email, password, username } = await req.json();
 
-    const createUser = `INSERT INTO users (username, email, password) VALUES ($1, $2, $3)`;
+    const createUser = `INSERT INTO "user" (username, email, password) VALUES ($1, $2, $3)`;
 
-    const user = await runQuery(createUser, [username, email, password]);
+    const hashedPassword = hashSync(password, 10);
+
+    const user = await runQuery(createUser, [username, email, hashedPassword]);
 
     return new NextResponse(
       JSON.stringify({ user: user, message: "Amjilttai burtgelee" })

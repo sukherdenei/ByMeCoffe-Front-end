@@ -53,7 +53,7 @@ const LoginPage = ({
   });
 
   const loginUser = async (email: string, password: string) => {
-    const response = await fetch("http://localhost:3000/api/user", {
+    const response = await fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ const LoginPage = ({
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    console.log("data-64", data);
+    console.log("login-64", data);
     if (data.error) {
       alert(data.message);
     } else {
