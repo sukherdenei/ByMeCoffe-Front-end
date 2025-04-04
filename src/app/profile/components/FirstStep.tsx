@@ -44,17 +44,41 @@ export const FirstStep = ({
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    setCurrentStep(currentStep + 1);
-  }
-
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setImage(URL.createObjectURL(file));
     }
   };
+  //
+  const getProfile = async (
+    name: string,
+    about: string,
+    avatarimage: string,
+    socialmediaurl: string
+  ) => {
+    const response = await fetch("/api/profile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        about: about,
+        socialmediaurl: socialmediaurl,
+        avatarimage: avatarimage,
+      }),
+    });
+    const data = await response.json();
+    console.log("Successfully signUp", data);
+    // router.push("/login");
+  };
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    getProfile(values.name, values.about, values.photo, values.url);
+    console.log(values);
+  }
+
   return (
     <div>
       <div className="">
