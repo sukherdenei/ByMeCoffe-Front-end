@@ -19,6 +19,7 @@ import { boolean, z } from "zod";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 import { userType } from "../../../../../util/type";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   username: z

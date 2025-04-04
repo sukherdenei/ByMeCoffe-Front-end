@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { Camera } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   photo: z.string().nonempty("Зураг заавал шаардлагатай"),
@@ -34,6 +35,7 @@ export const FirstStep = ({
   setCurrentStep: (_e: number) => void;
 }) => {
   const [image, setImage] = useState<string | null>(null);
+  // const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -77,6 +79,7 @@ export const FirstStep = ({
   function onSubmit(values: z.infer<typeof formSchema>) {
     getProfile(values.name, values.about, values.photo, values.url);
     console.log(values);
+    setCurrentStep(currentStep + 1);
   }
 
   return (

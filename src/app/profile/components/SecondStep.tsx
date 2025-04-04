@@ -52,13 +52,13 @@ export const SecondStep = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      country: "Mongolia",
-      firstName: "Sukherdene",
-      lastName: "B",
+      country: "",
+      firstName: "",
+      lastName: "",
       about: "",
-      expires: "12",
-      year: "2025",
-      cvv: "999",
+      expires: "",
+      year: "",
+      cvv: "",
     },
   });
 
