@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -62,8 +64,10 @@ const LoginPage = ({
     });
     const data = await response.json();
     console.log("login-64", data);
+    toast.success("Login successfully");
     if (data.error) {
-      alert(data.message);
+      // alert("Wrong password!!");
+      toast.error("Wrong password!");
     } else {
       router.push("/profile");
     }
@@ -149,6 +153,7 @@ const LoginPage = ({
             >
               Continue
             </Button>
+            <Toaster richColors />
           </div>
         </form>
       </Form>
