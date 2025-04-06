@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Toaster } from "sonner";
+import { toast, Toaster } from "sonner";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -58,9 +58,15 @@ export const SecondStep = ({
       body: JSON.stringify({ email, password }),
     });
     const data = await response.json();
-    console.log("Successfully signUp", data);
-
-    router.push("/login");
+    console.log("Successfully sign-up", data);
+    toast.success("Successfully sign-up", data);
+    if (data.error) {
+      // alert("Wrong password!!");
+      toast.error("Wrong password!");
+    } else {
+      router.push("/login");
+    }
+    // router.push("/login");
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -84,7 +90,6 @@ export const SecondStep = ({
           Log in
         </Button>
       </Link>
-
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -148,6 +153,7 @@ export const SecondStep = ({
             >
               Continue
             </Button>
+            <Toaster richColors />
           </div>
         </form>
       </Form>

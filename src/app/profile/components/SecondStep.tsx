@@ -62,10 +62,45 @@ export const SecondStep = () => {
     },
   });
 
+  const getBankCard = async (
+    country: string,
+    firstname: string,
+    lastname: string,
+    cardnumber: string,
+    expirydate: string,
+    user_id: string
+  ) => {
+    const response = await fetch("/api/bank-card", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        country: country,
+        firstname: firstname,
+        lastname: lastname,
+        cardnumber: cardnumber,
+        expirydate: expirydate,
+        user_id: user_id,
+      }),
+    });
+    const data = await response.json();
+    console.log("Successfully sign-up", data);
+    // router.push("/login");
+  };
+
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast.success(`${selectedCountry?.name} ${selectedCountry?.emoji} `);
     console.log(values);
     router.push("/");
+    getBankCard(
+      values.country,
+      values.firstName,
+      values.lastName,
+      values.expires,
+      values.year,
+      values.cvv
+    );
   }
 
   return (
