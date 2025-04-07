@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/select";
 
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const formSchema = z.object({
   country: z.string().nonempty("Please select country"),
@@ -71,12 +72,25 @@ export const SecondStep = () => {
     year: string,
     cvv: string
   ) => {
-    const response = await fetch("/api/bank-card", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    // const response = await fetch("/api/bank-card", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     country: country,
+    //     firstname: firstname,
+    //     lastname: lastname,
+    //     cardnumber: cardnumber,
+    //     expires: expires,
+    //     year: year,
+    //     cvv: cvv,
+    //     user_id: localStorage.getItem("userId"),
+    //   }),
+    // });
+    // const response = await axios
+    try {
+      const response = await axios.post("/api/bank-card", {
         country: country,
         firstname: firstname,
         lastname: lastname,
@@ -85,10 +99,15 @@ export const SecondStep = () => {
         year: year,
         cvv: cvv,
         user_id: localStorage.getItem("userId"),
-      }),
-    });
-    const data = await response.json();
-    console.log("Successfully sign-up", data);
+      });
+      console.log(response, "test axios console-log");
+    } catch (error) {
+      console.log("error", error);
+      alert("error in connect bank card");
+    }
+
+    // const data = await response.json();
+    // console.log("Successfully sign-up", data);
     // router.push("/login");
   };
 
@@ -96,6 +115,7 @@ export const SecondStep = () => {
     toast.success(`${selectedCountry?.name} ${selectedCountry?.emoji} `);
     console.log(values);
     router.push("/");
+
     getBankCard(
       values.country,
       values.firstName,

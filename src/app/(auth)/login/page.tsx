@@ -55,23 +55,25 @@ const LoginPage = ({
   });
 
   const loginUser = async (email: string, password: string) => {
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await response.json();
-    console.log("login-64", data);
-    localStorage.setItem("userId", data.user.id);
-    toast.success("Login successfully");
-    if (data.error) {
-      // alert("Wrong password!!");
-      toast.error("Wrong password!");
-    } else {
-      router.push("/profile");
-    }
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      console.log("login-67", data);
+      localStorage.setItem("userId", data.user.id);
+      toast.success("Login successfully");
+      if (data.error) {
+        // alert("Wrong password!!");
+        toast.error("Wrong password!");
+      } else {
+        router.push("/profile");
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {

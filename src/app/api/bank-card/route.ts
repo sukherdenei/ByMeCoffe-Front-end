@@ -11,19 +11,20 @@ export async function POST(req: Request): Promise<Response> {
       cardnumber,
       expires,
       year,
-      cvv,
+      //   cvv,
       user_id,
     } = await req.json();
 
     const expirydate = `${year}-${expires}-01 `;
 
-    const createBankCard = `INSERT INTO "BankCard" ("country","firstname", "lastname", "cardnumber", "expirydate") VALUES ($1, $2, $3, $4 , $5) RETURNING *;`;
+    const createBankCard = `INSERT INTO "BankCard" ("country","firstname", "lastname", "cardnumber", "expirydate","userid") VALUES ($1, $2, $3, $4 , $5, $6) RETURNING *;`;
     const newBankCard: BankCardType[] = await runQuery(createBankCard, [
       country,
       firstname,
       lastname,
       cardnumber,
       expirydate,
+      user_id,
     ]);
 
     if (!newBankCard || newBankCard.length === 0) {

@@ -66,7 +66,6 @@ export const SecondStep = ({
     } else {
       router.push("/login");
     }
-    // router.push("/login");
   };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
