@@ -64,6 +64,7 @@ const LoginPage = ({
     });
     const data = await response.json();
     console.log("login-64", data);
+    localStorage.setItem("userId", data.user.id);
     toast.success("Login successfully");
     if (data.error) {
       // alert("Wrong password!!");

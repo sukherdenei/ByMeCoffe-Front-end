@@ -31,7 +31,7 @@ const formSchema = z.object({
   country: z.string().nonempty("Please select country"),
   firstName: z.string().nonempty("Please enter your first name"),
   lastName: z.string().nonempty("Please enter your last name"),
-  about: z
+  cardnumber: z
     .string()
     .nonempty("Please enter your card number")
     .min(10, {
@@ -55,7 +55,7 @@ export const SecondStep = () => {
       country: "",
       firstName: "",
       lastName: "",
-      about: "",
+      cardnumber: "",
       expires: "",
       year: "",
       cvv: "",
@@ -67,8 +67,9 @@ export const SecondStep = () => {
     firstname: string,
     lastname: string,
     cardnumber: string,
-    expirydate: string,
-    user_id: string
+    expires: string,
+    year: string,
+    cvv: string
   ) => {
     const response = await fetch("/api/bank-card", {
       method: "POST",
@@ -80,8 +81,10 @@ export const SecondStep = () => {
         firstname: firstname,
         lastname: lastname,
         cardnumber: cardnumber,
-        expirydate: expirydate,
-        user_id: user_id,
+        expires: expires,
+        year: year,
+        cvv: cvv,
+        user_id: localStorage.getItem("userId"),
       }),
     });
     const data = await response.json();
@@ -97,6 +100,7 @@ export const SecondStep = () => {
       values.country,
       values.firstName,
       values.lastName,
+      values.cardnumber,
       values.expires,
       values.year,
       values.cvv
@@ -181,7 +185,7 @@ export const SecondStep = () => {
 
               <FormField
                 control={form.control}
-                name="about"
+                name="cardnumber"
                 render={({ field }) => (
                   <FormItem className="w-full h-[62px] flex flex-col items-start gap-2 ">
                     <FormLabel>Enter card number</FormLabel>

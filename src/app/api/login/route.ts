@@ -15,7 +15,7 @@ export async function POST(req: Request): Promise<Response> {
       );
     }
 
-    const getUserQuery = `SELECT * FROM "user" WHERE email = $1;`;
+    const getUserQuery = `SELECT * FROM "User" WHERE email = $1;`;
     const users: userType[] = await runQuery(getUserQuery, [email]);
 
     if (!users || users.length === 0) {

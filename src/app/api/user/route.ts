@@ -23,7 +23,7 @@ export async function POST(req: Request, res: Response) {
 export async function GET(): Promise<NextResponse> {
   try {
     const createTable = await runQuery(`
-      CREATE TABLE "public"."user" (
+      CREATE TABLE "public"."User" (
         "id" SERIAL PRIMARY KEY,
         "email" VARCHAR(255) UNIQUE NOT NULL,
         "password" TEXT NOT NULL,
@@ -33,7 +33,7 @@ export async function GET(): Promise<NextResponse> {
         "updatedAt" TIMESTAMP DEFAULT NOW()
     );
     `);
-    const user = `SELECT id, email,password  FROM "user" WHERE name='Coffee' ORDER BY price;`;
+    const user = `SELECT id, email,password  FROM "User" WHERE name='Coffee' ORDER BY price;`;
 
     const getUser = await runQuery(user);
     if (getUser.length <= 0) {

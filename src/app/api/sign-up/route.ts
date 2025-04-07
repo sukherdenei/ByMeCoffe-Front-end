@@ -22,7 +22,7 @@ export async function POST(req: Request): Promise<NextResponse> {
   try {
     const { email, password, username } = await req.json();
 
-    const createUser = `INSERT INTO "user" (username, email, password) VALUES ($1, $2, $3)`;
+    const createUser = `INSERT INTO "User" (username, email, password) VALUES ($1, $2, $3)`;
 
     const hashedPassword = hashSync(password, 10);
 

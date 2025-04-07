@@ -4,17 +4,26 @@ import { runQuery } from "../../../../util/server/queryService";
 
 export async function POST(req: Request): Promise<Response> {
   try {
-    const { country, firstname, lastname, cardnumber, expirydate, user_id } =
-      await req.json();
+    const {
+      country,
+      firstname,
+      lastname,
+      cardnumber,
+      expires,
+      year,
+      cvv,
+      user_id,
+    } = await req.json();
 
-    const createBankCard = `INSERT INTO "BankCard" ("country","firstname", "lastname", "cardnumber", "expirydate") VALUES ($1, $2, $3, $4 , $5,$6,$7) RETURNING *;`;
+    const expirydate = `${year}-${expires}-01 `;
+
+    const createBankCard = `INSERT INTO "BankCard" ("country","firstname", "lastname", "cardnumber", "expirydate") VALUES ($1, $2, $3, $4 , $5) RETURNING *;`;
     const newBankCard: BankCardType[] = await runQuery(createBankCard, [
       country,
       firstname,
       lastname,
       cardnumber,
       expirydate,
-      user_id,
     ]);
 
     if (!newBankCard || newBankCard.length === 0) {
