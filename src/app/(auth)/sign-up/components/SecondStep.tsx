@@ -61,7 +61,6 @@ export const SecondStep = ({
     console.log("Successfully sign-up", data);
     toast.success("Successfully sign-up", data);
     if (data.error) {
-      // alert("Wrong password!!");
       toast.error("Wrong password!");
     } else {
       router.push("/login");

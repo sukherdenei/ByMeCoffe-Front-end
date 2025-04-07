@@ -103,9 +103,9 @@ export const SecondStep = () => {
       console.log(response, "test axios console-log");
     } catch (error) {
       console.log("error", error);
-      alert("error in connect bank card");
+      // alert("error in connect bank card");
+      toast.error("Error in connect bank card")
     }
-
     // const data = await response.json();
     // console.log("Successfully sign-up", data);
     // router.push("/login");

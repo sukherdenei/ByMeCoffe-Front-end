@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
+import axios from "axios";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -55,25 +56,27 @@ const LoginPage = ({
   });
 
   const loginUser = async (email: string, password: string) => {
+
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await response.json();
-      console.log("login-67", data);
+    const {data} = await axios.post("/api/login",{
+      email,password
+    })
+      
+      // const response = await fetch("/api/login", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ email, password }),
+      // });
+      // const data = await response.json();
+      console.log("front-login-73", data);
+      toast.success("Login successfully-68");
       localStorage.setItem("userId", data.user.id);
-      toast.success("Login successfully");
-      if (data.error) {
-        // alert("Wrong password!!");
-        toast.error("Wrong password!");
-      } else {
         router.push("/profile");
-      }
-    } catch (error) {}
+    } catch (error) {
+      toast.error("Wrong password!");
+    }
   };
 
   useEffect(() => {
