@@ -50,7 +50,7 @@ export const SecondStep = ({
   });
 
   const signupUser = async (email: string, password: string) => {
-    const response = await fetch("/api/user", {
+    const response = await fetch("/api/sign-up", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

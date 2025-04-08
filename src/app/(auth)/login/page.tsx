@@ -56,12 +56,11 @@ const LoginPage = ({
   });
 
   const loginUser = async (email: string, password: string) => {
-
     try {
-    const {data} = await axios.post("/api/login",{
-      email,password
-    })
-      
+      const { data } = await axios.post("/api/login", {
+        email,
+        password,
+      });
       // const response = await fetch("/api/login", {
       //   method: "POST",
       //   headers: {
@@ -73,7 +72,17 @@ const LoginPage = ({
       console.log("front-login-73", data);
       toast.success("Login successfully-68");
       localStorage.setItem("userId", data.user.id);
+
+      if (data.user.name) {
+        router.push("/view-page");
+      } else {
         router.push("/profile");
+      }
+      // router.push("/profile");
+
+      // if (data === data.id) {
+      //   router.push("/view-page");
+      // }
     } catch (error) {
       toast.error("Wrong password!");
     }

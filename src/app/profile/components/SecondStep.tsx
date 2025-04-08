@@ -104,7 +104,7 @@ export const SecondStep = () => {
     } catch (error) {
       console.log("error", error);
       // alert("error in connect bank card");
-      toast.error("Error in connect bank card")
+      toast.error("Error in connect bank card");
     }
     // const data = await response.json();
     // console.log("Successfully sign-up", data);
@@ -114,7 +114,7 @@ export const SecondStep = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast.success(`${selectedCountry?.name} ${selectedCountry?.emoji} `);
     console.log(values);
-    router.push("/");
+    router.push("/view-page");
 
     getBankCard(
       values.country,

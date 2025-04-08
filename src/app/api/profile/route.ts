@@ -14,7 +14,7 @@ export async function GET(req: Request): Promise<Response> {
           'avatarImage', p."avatarImage",
           'socialMediaURL', p."socialMediaURL"
         ) AS profile
-      FROM "user" u
+      FROM "User" u
       LEFT JOIN "Profile" p ON u.id = p."user_id";
     `;
 
@@ -34,16 +34,25 @@ export async function GET(req: Request): Promise<Response> {
 
 export async function POST(req: Request): Promise<Response> {
   try {
-    const { name, about, avatarimage, socialmediaurl } = await req.json();
+    const { name, about, avatarimage, socialmediaurl, userId } =
+      await req.json();
 
-    const createProfilequery = `INSERT INTO "Profile" ("name", "about", "avatarimage", "socialmediaurl") VALUES ($1, $2, $3, $4) RETURNING *;`;
+    const createProfilequery = `INSERT INTO "Profile" ("name", "about", "avatarimage", "socialmediaurl", "userid") VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
 
     const newProfile = await runQuery(createProfilequery, [
       name,
       about,
       avatarimage,
       socialmediaurl,
+      userId,
     ]);
+
+    // const profileId = newProfile[0].id;
+    const profileId = (newProfile[0] as { id: number }).id; // Ensuring type safety
+    const updateUserQuery = `
+    UPDATE "user" SET "BankCard" = $1 WHERE id = $2;
+  `;
+    await runQuery(updateUserQuery, [profileId, userId]);
 
     return new NextResponse(
       JSON.stringify({

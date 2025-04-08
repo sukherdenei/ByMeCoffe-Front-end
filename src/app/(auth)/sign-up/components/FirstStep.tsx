@@ -27,7 +27,7 @@ const formSchema = z.object({
     .min(3, {
       message: "Username must be at least 3 characters.",
     })
-    .max(12, "Maximum 12 character"),
+    .max(16, "Maximum 12 character"),
 });
 
 export function FirstStep({
@@ -55,7 +55,7 @@ export function FirstStep({
 
   const addUser = async (username: string) => {
     // useEffect(() => {
-    fetch("api/user", {
+    fetch("api/sign-up", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username }),

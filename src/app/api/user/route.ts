@@ -1,67 +1,126 @@
-import { NextResponse } from "next/server";
-import { checkUser } from "../../../../back_end/controllers/user.controller";
-import { getUsers } from "../../../../back_end/user";
+// import { NextResponse } from "next/server";
+// import { checkUser } from "../../../../back_end/controllers/user.controller";
+// import { getUsers } from "../../../../back_end/user";
+// import { runQuery } from "../../../../util/server/queryService";
+// import { error } from "console";
+
+// export async function POST(req: Request, res: Response) {
+//   const { email, password } = await req.json();
+//   try {
+//     const query = `INSERT INTO "user" (email, password) VALUES ($1, $2)`;
+//     const addUser = await runQuery(query, [email, password]);
+
+//     return new NextResponse(JSON.stringify({ add: addUser }));
+//   } catch (error) {
+//     return new NextResponse(JSON.stringify({ error: "Failed to run query" }), {
+//       status: 500,
+//     });
+//   }
+// }
+
+// export async function GET(): Promise<NextResponse> {
+//   try {
+//     const createTable = await runQuery(`
+//       CREATE TABLE "public"."User" (
+//         "id" SERIAL PRIMARY KEY,
+//         "email" VARCHAR(255) UNIQUE NOT NULL,
+//         "password" TEXT NOT NULL,
+//         "username" VARCHAR(100) UNIQUE NOT NULL,
+//         "receivedDonations" INTEGER[],
+//         "createdAt" TIMESTAMP DEFAULT NOW(),
+//         "updatedAt" TIMESTAMP DEFAULT NOW()
+//     );
+//     `);
+//     const user = `SELECT id, email,password  FROM "User" WHERE name='Coffee' ORDER BY price;`;
+
+//     const getUser = await runQuery(user);
+//     if (getUser.length <= 0) {
+//       return new NextResponse(JSON.stringify({ error: "user not found" }), {
+//         status: 404,
+//       });
+//     }
+
+//     return new NextResponse(JSON.stringify({ getUser: createTable }));
+//   } catch (error) {
+//     console.log("Failed to run query:", error);
+//     return new NextResponse(JSON.stringify({ error: "Failed to run query" }), {
+//       status: 500,
+//     });
+//   }
+// }
+
+// import { runQuery } from "@/util/queryService";
+import { NextRequest, NextResponse } from "next/server";
 import { runQuery } from "../../../../util/server/queryService";
-import { error } from "console";
 
-export async function POST(req: Request, res: Response) {
-  const { email, password } = await req.json();
+export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    const query = `INSERT INTO "user" (email, password) VALUES ($1, $2)`;
-    const addUser = await runQuery(query, [email, password]);
+    const getAllUsers = `
+    SELECT
+      u.id,
+      u.email,
+      u.username,
+    
+      json_build_object(
+        'name', p.name,
+        'about', p.about,
+        'avatarImage', p.avatarImage,
+        'successMessage', p.successMessage,
+        'socialmediaurl', p.socialMediaUrl
+      ) AS profile,
+    
+      json_build_object(
+        'cardNumber', b.cardNumber,
+        'expiryDate', b.expiryDate,
+        'country', b.country
+      ) AS bankCard,
+    
+      (
+        SELECT json_agg(
+          json_build_object(
+            'id', d1.id,
+            'amount', d1.amount,
+            'message', d1.specialMessage
+          )
+        )
+        FROM "Donation" d1
+        WHERE d1.donorId = u.id
+      ) AS donationsGiven,
+    
+      (
+        SELECT json_agg(
+          json_build_object(
+            'id', d2.id,
+            'amount', d2.amount,
+            'message', d2.specialMessage
+          )
+        )
+        FROM "Donation" d2
+        WHERE d2.recipientId = u.id
+      ) AS donationsReceived
+    
+    FROM "User" u
+    LEFT JOIN "Profile" p ON u.id = p.userId
+    LEFT JOIN "BankCard" b ON u.id = b.userId
+    ORDER BY u.id DESC;
+    `;
 
-    return new NextResponse(JSON.stringify({ add: addUser }));
-  } catch (error) {
-    return new NextResponse(JSON.stringify({ error: "Failed to run query" }), {
-      status: 500,
-    });
-  }
+    const users = await runQuery(getAllUsers);
 
-  // return await checkUser({ email: body.email, password: body.password });
-}
+    console.log("User-profile 110", users);
 
-export async function GET(): Promise<NextResponse> {
-  try {
-    const createTable = await runQuery(`
-      CREATE TABLE "public"."User" (
-        "id" SERIAL PRIMARY KEY,
-        "email" VARCHAR(255) UNIQUE NOT NULL,
-        "password" TEXT NOT NULL,
-        "username" VARCHAR(100) UNIQUE NOT NULL,
-        "receivedDonations" INTEGER[],
-        "createdAt" TIMESTAMP DEFAULT NOW(),
-        "updatedAt" TIMESTAMP DEFAULT NOW()
-    );
-    `);
-    const user = `SELECT id, email,password  FROM "User" WHERE name='Coffee' ORDER BY price;`;
-
-    const getUser = await runQuery(user);
-    if (getUser.length <= 0) {
-      return new NextResponse(JSON.stringify({ error: "user not found" }), {
+    if (!Array.isArray(users) || users.length === 0) {
+      return new NextResponse(JSON.stringify({ message: "User not found" }), {
         status: 404,
       });
     }
 
-    return new NextResponse(JSON.stringify({ getUser: createTable }));
+    return new NextResponse(JSON.stringify(users), {
+      status: 200,
+    });
   } catch (error) {
-    console.log("Failed to run query:", error);
-    return new NextResponse(JSON.stringify({ error: "Failed to run query" }), {
+    return new NextResponse(JSON.stringify({ error: "aldaa garlaa" }), {
       status: 500,
     });
   }
 }
-
-// import { checkUser } from "../../../../back_end/controllers/user.controller";
-// import { getUsers } from "../../../../back_end/user";
-
-// export async function GET() {
-//   const users = await getUsers();
-
-//   return new Response(JSON.stringify({ data: users }));
-// }
-
-// export async function POST(req: Request, res: Response) {
-//   const body = await req.json();
-//   console.log({ body });
-//   return await checkUser({ email: body.email, password: body.password });
-// }

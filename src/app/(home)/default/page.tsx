@@ -1,4 +1,7 @@
+"use client";
+
 import { UserProfile } from "@/app/_components/UserProfile";
+import { useUser } from "@/app/_context/UserContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +10,8 @@ import Link from "next/link";
 import React from "react";
 
 const Explore = () => {
+  const { users } = useUser();
+  console.log("users", users);
   return (
     <div className="w-[957px] flex flex-col p-6 ">
       <UserProfile />

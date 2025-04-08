@@ -37,7 +37,7 @@ export async function POST(req: Request): Promise<Response> {
     if (!user_id || isNaN(user_id)) {
       return new NextResponse(
         JSON.stringify({
-          error: "user_id baihgui baina",
+          error: "user_id not found",
         }),
         { status: 400 }
       );

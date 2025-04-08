@@ -7,25 +7,25 @@ import {
   useEffect,
   useState,
 } from "react";
+import { userType } from "../../../util/type";
 
 type UserContextType = {
-  users: {
-    name: string;
-    email: string;
-    id: string;
-  };
+  users: userType[];
 };
 
-const userContext = createContext<UserContextType | null>(null);
+const userContext = createContext<UserContextType>(
+  [] as unknown as UserContextType
+);
 
 export const useUser = () => {
   return useContext(userContext);
 };
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [users, setUsers] = useState<any | null>(null);
+  const [users, setUsers] = useState<userType[]>([]);
 
   const getUser = async () => {
+    console.log("get user called");
     try {
       const res = await fetch("/api/users", {
         method: "GET",
@@ -38,6 +38,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       setUsers(jsonData.data);
 
       console.log("get user jsonData", jsonData);
+
       if (jsonData.error) {
         alert(jsonData.message);
         return;

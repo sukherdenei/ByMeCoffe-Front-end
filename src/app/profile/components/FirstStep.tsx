@@ -35,6 +35,7 @@ export const FirstStep = ({
   setCurrentStep: (_e: number) => void;
 }) => {
   const [image, setImage] = useState<string | null>(null);
+  const userId = localStorage.getItem("userId");
   // const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -69,6 +70,7 @@ export const FirstStep = ({
         about: about,
         socialmediaurl: socialmediaurl,
         avatarimage: avatarimage,
+        userId: userId,
       }),
     });
     const data = await response.json();
