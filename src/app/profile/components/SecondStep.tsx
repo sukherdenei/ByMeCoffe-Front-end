@@ -35,10 +35,10 @@ const formSchema = z.object({
   cardnumber: z
     .string()
     .nonempty("Please enter your card number")
-    .min(10, {
-      message: "Card number must be at 10 characters.",
+    .min(16, {
+      message: "Card number must be at 16 characters.",
     })
-    .max(12, "Maximum 12 character"),
+    .max(16, "Maximum 16 character"),
   expires: z.string().nonempty("Please enter month"),
   year: z.string().nonempty("Please enter year"),
   cvv: z.string().nonempty("Please enter your cvv").min(3, {
@@ -137,7 +137,7 @@ export const SecondStep = () => {
           >
             <div className="w-full py-6 flex flex-col items-start gap-[6px] ">
               <h3 className="text-[24px] font-[600] leading-[32px] ">
-                How would you like to be paid?{" "}
+                How would you like to be paid?
               </h3>
               <h4 className="text-[14px] leading-[20px] font-[400] text-muted-foreground ">
                 Enter location and payment details

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 
 import { Copy } from "lucide-react";
+import GetNeon from "../(home)/explore/page";
 
 export const UserProfile = () => {
   return (

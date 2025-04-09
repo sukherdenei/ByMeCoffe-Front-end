@@ -3,6 +3,10 @@ import { DashboardProfile } from "../_components/DashboardProfile";
 import { PersonalPage } from "../_components/PersonalPage";
 import { AddCoverImg } from "../_components/AddCoverImg";
 import { Header } from "../_components/Header.";
+import { Logo } from "../_components/logo";
+import { SetNewPass } from "../_components/SetNewPass";
+import { SideBar } from "../_components/sidebar";
+import { UserProfile } from "../_components/UserProfile";
 
 const Page = () => {
   return (

@@ -7,11 +7,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
+import React, { useEffect } from "react";
 
 export const RecentTransaction = () => {
+  useEffect(()=>{
+  },[])
   return (
-    <div className="w-full flex flex-col gap-3 items-start ">
+    <div className="w-full flex flex-col gap-3 items-start sm:w-[500px] ">
       <div className="flex w-full justify-between items-start ">
         <h4 className="text-[16px] font-[600] leading-[24px] ">
           Recent transactions

@@ -3,7 +3,6 @@ import { runQuery } from "../../../../util/server/queryService";
 import { error } from "console";
 import { userType } from "../../../../util/type";
 import bcrypt from "bcrypt";
-import { Toaster } from "sonner";
 
 export async function POST(req: Request): Promise<Response> {
   try {
@@ -16,7 +15,7 @@ export async function POST(req: Request): Promise<Response> {
       );
     }
 
-    const getUserQuery = `SELECT * FROM "User" LEFT JOIN "Profile" ON "User".id = "Profile".userid WHERE email =$1;`;
+    const getUserQuery = `SELECT u.id, u.email, u.password, u.username, p.name FROM "User" as u LEFT JOIN "Profile" as p ON u.id = p.userid WHERE email =$1;`;
     const users: userType[] = await runQuery(getUserQuery, [email]);
 
     if (!users || users.length === 0) {
@@ -27,7 +26,7 @@ export async function POST(req: Request): Promise<Response> {
     }
 
     const user = users[0];
-    console.log(user);
+    console.log("USER!!!",user);
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {

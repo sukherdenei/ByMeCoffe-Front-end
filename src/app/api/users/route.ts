@@ -54,7 +54,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const users = await runQuery(usersQuery);
 
-    console.log("User-profile 10", `users`);
+    console.log("User-profile", `users`);
 
     if (!Array.isArray(users) || users.length === 0) {
       return new NextResponse(JSON.stringify({ message: "User not found" }), {
