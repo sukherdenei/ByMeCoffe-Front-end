@@ -69,7 +69,7 @@ const LoginPage = ({
       //   body: JSON.stringify({ email, password }),
       // });
       // const data = await response.json();
-      console.log("front-login-73", data);
+      console.log("front-login", data);
       toast.success("Login successfully-68");
       localStorage.setItem("userId", data.user.id);
 
@@ -78,11 +78,6 @@ const LoginPage = ({
       } else {
         router.push("/profile");
       }
-      // router.push("/profile");
-
-      // if (data === data.id) {
-      //   router.push("/view-page");
-      // }
     } catch (error) {
       toast.error("Wrong password!");
     }

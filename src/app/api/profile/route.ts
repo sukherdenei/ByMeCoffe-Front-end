@@ -39,7 +39,7 @@ export async function POST(req: Request): Promise<Response> {
 
     const createProfilequery = `INSERT INTO "Profile" ("name", "about", "avatarimage", "socialmediaurl", "userid") VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
 
-    const newProfile = await runQuery(createProfilequery, [ 
+    const newProfile = await runQuery(createProfilequery, [
       name,
       about,
       avatarimage,
@@ -47,9 +47,9 @@ export async function POST(req: Request): Promise<Response> {
       userId,
     ]);
 
-    const profileId = (newProfile[0] as { id: number }).id; 
+    const profileId = (newProfile[0] as { id: number }).id;
     const updateUserQuery = `
-    UPDATE "user" SET "BankCard" = $1 WHERE id = $2;
+    UPDATE "User" SET "BankCard" = $1 WHERE id = $2;
   `;
     await runQuery(updateUserQuery, [profileId, userId]);
 

@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -10,8 +11,7 @@ import {
 import React, { useEffect } from "react";
 
 export const RecentTransaction = () => {
-  useEffect(()=>{
-  },[])
+  useEffect(() => {}, []);
   return (
     <div className="w-full flex flex-col gap-3 items-start sm:w-[500px] ">
       <div className="flex w-full justify-between items-start ">

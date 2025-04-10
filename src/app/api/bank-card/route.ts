@@ -29,7 +29,7 @@ export async function POST(req: Request): Promise<Response> {
 
     if (!newBankCard || newBankCard.length === 0) {
       return new NextResponse(
-        JSON.stringify({ error: "BankCard үүсгэхэд алдаа гарлаа!" }),
+        JSON.stringify({ error: "Bank Card үүсгэхэд алдаа гарлаа!" }),
         { status: 500 }
       );
     }
@@ -45,7 +45,7 @@ export async function POST(req: Request): Promise<Response> {
 
     const bankCardId = newBankCard[0].id;
     const updateUserQuery = `
-    UPDATE "user" SET "BankCard" = $1 WHERE id = $2;
+    UPDATE "User" SET "BankCard" = $1 WHERE id = $2;
   `;
     await runQuery(updateUserQuery, [bankCardId, user_id]);
 
