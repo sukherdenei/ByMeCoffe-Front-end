@@ -114,7 +114,7 @@ export const SecondStep = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast.success(`${selectedCountry?.name} ${selectedCountry?.emoji} `);
     console.log(values);
-    router.push("/view-page");
+    router.push("/explore");
 
     getBankCard(
       values.country,

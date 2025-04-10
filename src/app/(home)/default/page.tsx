@@ -7,9 +7,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ExternalLink, Search } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { userType } from "../../../../util/type";
+import axios from "axios";
 
 const Explore = () => {
+  const [usersNeon, setUsersNeon] = useState<userType[] | null>(null);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const response = await axios.get("/api/profile");
+        setUsersNeon(response.data);
+      } catch (error) {
+        console.error("Error fetching get user by id:", error);
+      }
+    };
+    getUsers();
+  }, []);
+
   const { users } = useUser();
   console.log("users", users);
   return (
@@ -26,7 +42,16 @@ const Explore = () => {
             <div className="w-full flex justify-between items-center ">
               <div className="flex gap-3 items-center justify-between w-full">
                 <Avatar>
-                  <AvatarImage src="/Profile.png" />
+                  {/* <AvatarImage src="/Profile.png" /> */}
+                  {usersNeon?.map((user) => {
+                    return (
+                      <img
+                        key={user.id}
+                        src={user.profile?.avatarImage}
+                        alt=""
+                      />
+                    );
+                  })}
                 </Avatar>
                 <div className="flex items-center gap-2 w-full">
                   <Avatar>

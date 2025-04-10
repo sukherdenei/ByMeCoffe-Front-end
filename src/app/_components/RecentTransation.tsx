@@ -10,10 +10,13 @@ import {
 } from "@/components/ui/select";
 import React, { useEffect } from "react";
 
-export const RecentTransaction = () => {
+export const RecentTransaction = ({ user, key }) => {
   useEffect(() => {}, []);
   return (
-    <div className="w-full flex flex-col gap-3 items-start sm:w-[500px] ">
+    <div
+      key={key}
+      className="w-full flex flex-col gap-3 items-start sm:w-[500px] "
+    >
       <div className="flex w-full justify-between items-start ">
         <h4 className="text-[16px] font-[600] leading-[24px] ">
           Recent transactions
@@ -81,10 +84,10 @@ export const RecentTransaction = () => {
                 </Avatar>
                 <div className="flex flex-col justify-center items-start gap-1 ">
                   <h4 className="text-[14px] font-[500] leading-[20px] ">
-                    Guest
+                    {user.username}
                   </h4>
                   <h5 className="text-[12px] font-[400] leading-[16px] ">
-                    instagram.com/welesley
+                    {user.profile.socialmediaurl}
                   </h5>
                 </div>
               </div>
@@ -101,9 +104,7 @@ export const RecentTransaction = () => {
               </div>
             </div>
             <h4 className="text-[14px] font-[400] leading-[20px] w-full ">
-              Thank you for being so awesome everyday! You always manage to
-              brighten up my day when I’m feeling down. Although $1 isn’t that
-              much money it’s all I can contribute at the moment
+              {user.profile.about}
             </h4>
           </div>
         </div>

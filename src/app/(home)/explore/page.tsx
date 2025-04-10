@@ -36,7 +36,7 @@ const GetNeon = () => {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const response = await axios.get("/api/users");
+        const response = await axios.get("/api/user");
         setUsersNeon(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -49,14 +49,15 @@ const GetNeon = () => {
   return (
     <div className="w-[955px] flex flex-col gap-6 px-6">
       {/* <UserProfile /> */}
-      <RecentTransaction />
+
       {usersNeon ? (
         <div>
           {usersNeon.map((user) => (
-            <p key={user.id[0]}>
-              {user.username} {user.profile.about}
-              {user.profile.socialmediaurl}
-            </p>
+            <RecentTransaction user={user} key={user.id} />
+            // <p key={user.id[0]}>
+            //   {user.username} {user.profile.about}
+            //   {user.profile.socialmediaurl}
+            // </p>v
           ))}
         </div>
       ) : (
