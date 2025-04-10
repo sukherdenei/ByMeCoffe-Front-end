@@ -1,5 +1,6 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
@@ -8,10 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Link from "next/link";
 import React, { useEffect } from "react";
 
 export const RecentTransaction = ({ user, key }) => {
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
   return (
     <div
       key={key}
@@ -25,6 +27,11 @@ export const RecentTransaction = ({ user, key }) => {
           <SelectTrigger className="h-[36px] py-2 px-4 border-dashed ">
             <SelectValue placeholder="Amount" />
           </SelectTrigger>
+          <Link href="/view-profile">
+            <Button className="text-sm bg-[#F4F4F5] text-black hover:bg-[#F4F4F5] cursor-pointer hover:border-1">
+              view profile
+            </Button>
+          </Link>
           <SelectContent>
             <SelectItem value="a">
               <div className="flex items-center space-x-2">

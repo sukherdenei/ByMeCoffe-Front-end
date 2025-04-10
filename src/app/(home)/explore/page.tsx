@@ -23,6 +23,7 @@ import axios from "axios";
 import { UserProfile } from "@/app/_components/UserProfile";
 import { RecentTransaction } from "@/app/_components/RecentTransation";
 import { profile } from "console";
+import { Loader } from "@/app/_components/Loader";
 
 type userType = {
   id: string;
@@ -61,7 +62,8 @@ const GetNeon = () => {
           ))}
         </div>
       ) : (
-        <p>Loading...</p>
+        // <p>Loading...</p>
+        <Loader />
       )}
     </div>
   );
