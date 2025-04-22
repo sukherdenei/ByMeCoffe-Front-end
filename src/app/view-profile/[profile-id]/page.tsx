@@ -1,3 +1,4 @@
+"use client";
 import { NextRequest, NextResponse } from "next/server";
 import { runQuery } from "../../../../util/server/queryService";
 import { Header } from "@/app/_components/Header.";
@@ -13,7 +14,7 @@ const ViewProfile = () => {
       <Header />
       <CoverImg />
       <div className="w-screen px-[80px] flex gap-5 justify-center mt-[-86px] ">
-        <SupporterPage />
+        <SupporterPage users={users} />
         <DashboardProfile />
       </div>
     </div>

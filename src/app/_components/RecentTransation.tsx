@@ -27,7 +27,7 @@ export const RecentTransaction = ({ user, key }) => {
           <SelectTrigger className="h-[36px] py-2 px-4 border-dashed ">
             <SelectValue placeholder="Amount" />
           </SelectTrigger>
-          <Link href="/view-profile">
+          <Link href={`/view-profile/${user.id}`}>
             <Button className="text-sm bg-[#F4F4F5] text-black hover:bg-[#F4F4F5] cursor-pointer hover:border-1">
               view profile
             </Button>

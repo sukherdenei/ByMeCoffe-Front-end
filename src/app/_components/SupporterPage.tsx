@@ -2,8 +2,10 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Heart } from "lucide-react";
+import { userType } from "../../../util/type";
 
-export const SupporterPage = () => {
+export const SupporterPage = ({ users }: { users: userType[] }) => {
+  console.log(users, "tugo");
   return (
     <div className="w-[632px] flex flex-col items-start gap-5 z-50 bg-background rounded-lg ">
       <div className="w-full p-6 items-start flex flex-col gap-2 rounded-lg border-border border ">
