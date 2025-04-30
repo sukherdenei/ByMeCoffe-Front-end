@@ -35,7 +35,7 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
       });
       const jsonData = await res.json();
 
-      setUsers(jsonData.data);
+      setUsers(jsonData);
 
       console.log("get user jsonData", jsonData);
 

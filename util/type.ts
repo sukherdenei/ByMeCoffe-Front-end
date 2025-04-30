@@ -20,7 +20,8 @@ export type profileType = {
   name: string;
   about: string;
   avatarImage: string;
-  socialMediaURL: string;
+
+  socialmediaurl: string;
   backgroundImage?: string;
   successMessage?: string;
   user_id: number;
